@@ -16,7 +16,7 @@ class PostContainer extends Component {
   render() {
     const { posts } = this.state
     const render = posts ? (
-      posts.map(post => <Post post={post} />)
+      posts.map(post => <Post key={post.id} post={post} />)
     ) : (
       <CircularProgress />
     )

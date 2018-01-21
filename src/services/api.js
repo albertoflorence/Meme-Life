@@ -1,5 +1,7 @@
+const fakeId = () => Math.floor(new Date().getTime() * Math.random())
 const posts = [
   {
+    id: fakeId(),
     title: 'Velocidade 5x maior que a da luz',
     image: 'https://leninja.com.br/wp-content/uploads/2018/01/luz.jpg',
     created_at: '1 hour ago',
@@ -13,6 +15,7 @@ const posts = [
     }
   },
   {
+    id: fakeId(),
     title: 'Velocidade 5x maior que a da luz',
     image: 'https://leninja.com.br/wp-content/uploads/2018/01/luz.jpg',
     created_at: '1 hour ago',
@@ -26,6 +29,7 @@ const posts = [
     }
   },
   {
+    id: fakeId(),
     title: 'Velocidade 5x maior que a da luz',
     image: 'https://leninja.com.br/wp-content/uploads/2018/01/luz.jpg',
     created_at: '1 hour ago',
