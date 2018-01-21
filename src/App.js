@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { blue, red } from 'material-ui/colors'
 import PostContainer from './containers/PostContainer'
 import Layout from './components/Layout'
-import Header from './components/Header'
+import Header from './components/Header/index'
 import Auth from './components/Auth'
 import PostCreate from './components/PostCreate'
 
