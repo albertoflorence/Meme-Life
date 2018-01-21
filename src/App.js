@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { blue, red } from 'material-ui/colors'
 import PostContainer from './containers/PostContainer'
 import Layout from './components/Layout'
-import Header from './components/Header/index'
+import HeaderContainer from './containers/HeaderContainer'
 import Auth from './components/Auth'
 import PostCreate from './components/PostCreate'
 
@@ -30,7 +30,7 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <BrowserRouter>
           <Fragment>
-            <Header />
+            <HeaderContainer />
             <Layout>
               <Switch>
                 <Route path="/" exact component={PostContainer} />

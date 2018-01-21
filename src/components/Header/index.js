@@ -32,52 +32,38 @@ const styles = theme => ({
   }
 })
 
-class Header extends Component {
-  state = {
-    user: {
-      name: 'Alberto Florence',
-      email: 'alberto.sabatier@gmail.com',
-      role: {
-        description: 'admin',
-        level: 0
-      }
-    },
-    navItems: [
-      { name: 'IMAGES', link: '/posts/category/images' },
-      { name: 'videos', link: '/posts/category/videos' },
-      { name: 'gifs', link: '/posts/category/gifs' },
-      { name: 'login', link: '/login' }
-    ]
-  }
-  render() {
-    const { classes } = this.props
-    const { user, navItems } = this.state
-    return (
-      <div className={classes.root}>
-        <AppBar className={classes.toolbar} position="static">
-          <Toolbar>
-            <Grid container justify="space-around" alignItems="center">
-              <IconButton className={classes.menuButton} aria-label="Menu">
-                <Menu className={classes.white} />
-              </IconButton>
-              <Typography type="title" color="inherit" className={classes.flex}>
-                <Link to="/" className={classes.brand}>
-                  Meme
-                </Link>
-              </Typography>
-              <List>
-                {navItems.map(item => (
-                  <HeaderItem key={item.name} link={item.link}>
-                    {item.name}
-                  </HeaderItem>
-                ))}
-              </List>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-      </div>
-    )
-  }
+const HeaderItems = ({ items, align = 'center' }) => (
+  <List style={{ textAlign: align }}>
+    {items.map(item => (
+      <HeaderItem key={item.name} link={item.link}>
+        {item.name}
+      </HeaderItem>
+    ))}
+  </List>
+)
+
+const Header = ({ itemsCenter, itemsRight, classes }) => {
+  console.log(itemsRight)
+  return (
+    <div className={classes.root}>
+      <AppBar className={classes.toolbar} position="static">
+        <Toolbar>
+          <Grid container justify="space-around" alignItems="center">
+            <IconButton className={classes.menuButton} aria-label="Menu">
+              <Menu className={classes.white} />
+            </IconButton>
+            <Typography type="title" color="inherit" className={classes.flex}>
+              <Link to="/" className={classes.brand}>
+                Meme
+              </Link>
+            </Typography>
+            <HeaderItems align="center" items={itemsCenter} />
+            <HeaderItems align="right" items={itemsRight} />
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    </div>
+  )
 }
 
 export default withStyles(styles)(Header)
