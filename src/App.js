@@ -6,7 +6,6 @@ import { blue, red } from 'material-ui/colors'
 import PostContainer from './containers/PostContainer'
 import Layout from './components/Layout'
 import HeaderContainer from './containers/HeaderContainer'
-import Auth from './components/Auth'
 import PostCreate from './components/PostCreate'
 
 const theme = createMuiTheme({
@@ -14,7 +13,7 @@ const theme = createMuiTheme({
     primary: {
       light: blue[300],
       main: blue[500],
-      dark: blue[700]
+      dark: '#24292e'
     },
     secondary: {
       light: red[300],
@@ -34,7 +33,6 @@ class App extends Component {
             <Layout>
               <Switch>
                 <Route path="/" exact component={PostContainer} />
-                <Route path="/login" exact component={Auth} />
                 <Route path="/post/create" exact component={PostCreate} />
               </Switch>
             </Layout>

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import Post from '../components/Post'
 import { CircularProgress } from 'material-ui/Progress'
 
@@ -20,6 +20,7 @@ class PostContainer extends Component {
     ) : (
       <CircularProgress />
     )
+
     return render
   }
 }
