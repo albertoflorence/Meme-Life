@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Header from '../components/Header/index'
+import AuthContainer from './AuthContainer'
 class HeaderContainer extends Component {
   state = {
     user: {
@@ -24,7 +25,7 @@ class HeaderContainer extends Component {
           { name: 'create', link: '/post/create' },
           { name: 'logout', link: '/logout' }
         ]
-      : [{ name: 'login', link: '/login' }]
+      : [{ name: 'login', component: <AuthContainer /> }]
   }
 
   render() {
