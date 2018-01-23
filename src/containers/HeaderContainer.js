@@ -3,14 +3,7 @@ import Header from '../components/Header/index'
 import AuthContainer from './AuthContainer'
 class HeaderContainer extends Component {
   state = {
-    user: {
-      name: 'Alberto Florence',
-      email: 'alberto.sabatier@gmail.com',
-      role: {
-        description: 'admin',
-        level: 0
-      }
-    },
+    isAuthenticated: true,
     itemsCenter: [
       { name: 'IMAGES', link: '/posts/category/images' },
       { name: 'videos', link: '/posts/category/videos' },

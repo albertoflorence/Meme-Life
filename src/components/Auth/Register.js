@@ -3,6 +3,7 @@ import withValidation, {
   email,
   password,
   required,
+  len,
   createValidation
 } from '../../HOC/withValidation'
 import AuthForm from './AuthForm'
@@ -58,7 +59,7 @@ const rules = {
   validate: createValidation({
     email: [email],
     password: [password],
-    name: [required]
+    name: [len(4, 32)]
   })
 }
 

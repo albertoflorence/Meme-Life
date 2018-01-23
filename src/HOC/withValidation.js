@@ -30,12 +30,15 @@ export const email = value =>
   /^[\w\-\.]+@[\w]+(\.\w+){1,2}$/.test(value)
     ? null
     : 'Please, provide a valid email address'
+
 export const password = value =>
   value.trim().length >= 6
     ? null
     : 'Please, provide a password with at least 6 length long'
+
 export const required = (value, fieldName) =>
   value.trim().length > 0 ? null : `${fieldName} is required`
+
 export const len = (min, max) => (value, fieldName) => {
   if (value.trim().length < min) return `the ${fieldName} is too short`
   if (value.trim().length > max) return `the ${fieldName} is too long`

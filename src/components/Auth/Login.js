@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import withValidation, {
   email,
-  password,
+  required,
   createValidation
 } from '../../HOC/withValidation'
 import AuthForm from './AuthForm'
@@ -18,11 +18,6 @@ class Login extends Component {
         value: '',
         label: 'Password',
         type: 'password'
-      },
-      unknow: {
-        value: '',
-        label: 'xd',
-        type: 'text'
       }
     }
   }
@@ -56,7 +51,7 @@ class Login extends Component {
 const rules = {
   validate: createValidation({
     email: [email],
-    password: [password]
+    password: [required]
   })
 }
 
