@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
-import Card, {
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardContent
-} from 'material-ui/Card'
+import Card, { CardActions, CardHeader, CardContent } from 'material-ui/Card'
 import { Button, Typography, Avatar, Grid, Divider } from 'material-ui'
 import { Share, Comment } from 'material-ui-icons'
 
@@ -21,10 +16,14 @@ const styles = theme => ({
     padding: '20px'
   },
   media: {
-    height: '500px'
+    width: '100%',
+    maxHeight: '100%'
   },
   mediaBody: {
-    border: '1px solid rgba(0, 0, 0, 0.5)'
+    border: '1px solid rgba(0, 0, 0, 0.5)',
+    width: '100%',
+    height: 'auto',
+    boxSizing: 'border-box'
   },
   header: {
     padding: '15px',
@@ -50,7 +49,7 @@ class Post extends Component {
   state = {
     post: {
       title: 'Velocidade 5x maior que a da luz',
-      image: 'https://leninja.com.br/wp-content/uploads/2018/01/luz.jpg',
+      content_url: 'https://leninja.com.br/wp-content/uploads/2018/01/luz.jpg',
       created_at: '1 hour ago',
       category: 'imagens',
       description:
@@ -101,9 +100,9 @@ class Post extends Component {
         >
           {post.title}
         </Typography>
-        <div className={classes.mediaBody}>
-          <CardMedia image={post.image} className={classes.media} />
-        </div>
+        <Grid className={classes.mediaBody}>
+          <img src={post.content_url} alt="" className={classes.media} />
+        </Grid>
         <CardContent>
           <Typography className={classes.description}>
             {post.description}
