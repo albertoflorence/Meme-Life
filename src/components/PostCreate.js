@@ -1,44 +1,10 @@
 import React, { Component } from 'react'
-import { map } from '../util/index'
-import TextInput from './UI/TextInput'
-import { Grid, MenuItem, Button } from 'material-ui'
-import Card from 'material-ui/Card/Card'
-import withStyles from 'material-ui/styles/withStyles'
-import FileUpload from 'material-ui-icons/FileUpload'
-import FileInput from './UI/FileInput'
-
-const style = theme => ({
-  root: {
-    flexGlow: 1,
-    borderRadius: '10px',
-    border: '1px solid rgba(0,0,0,0.3)',
-    marginBottom: '50px'
-  },
-  body: {
-    padding: '40px'
-  },
-  textField: {
-    marginBottom: theme.spacing.unit * 2
-  },
-  title: {
-    textAlign: 'center'
-  },
-  preview: {
-    maxWidth: '100%',
-    height: '200px',
-    marginTop: '40px'
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit
-  },
-  uploadButton: {
-    marginTop: '15px',
-    backgroundColor: 'white',
-    border: '1px solid rgba(0, 0, 0, 0.4)',
-    color: theme.palette.primary.main
-  },
-  submitButton: {}
-})
+import withValidation, {
+  createValidation,
+  len,
+  required
+} from '../HOC/withValidation'
+import PostCreateForm from './PostCreateForm'
 
 class PostCreate extends Component {
   state = {
@@ -67,12 +33,19 @@ class PostCreate extends Component {
       }
     },
     content: {
-      value: '',
-      preview: ''
+      preview: '',
+      value: null,
+      label: '',
+      type: '',
+      accept: ''
     }
   }
 
   textChangeHandler = inputName => event => {
+    if (inputName === 'category') {
+      this.handleCategoryChange(event.target.value)
+    }
+
     this.setState({
       inputs: {
         ...this.state.inputs,
@@ -84,20 +57,49 @@ class PostCreate extends Component {
     })
   }
 
-  contentChangeHandler = category => event => {
+  handleCategoryChange(category) {
     let content
     if (category === 'videos') {
       content = {
-        value: event.target.value,
-        preview: event.target.value
+        type: 'text',
+        label: 'Video Url'
       }
     } else {
       content = {
-        value: event.target.files[0],
-        preview:
-          event.target.files[0] && URL.createObjectURL(event.target.files[0])
+        type: 'file'
+      }
+      if (category === 'images') {
+        content.accept = '.png,.jpg'
+        content.label = 'Image Upload'
+      } else {
+        content.accept = '.gif'
+        content.label = 'Gifs Upload'
       }
     }
+    this.setState({
+      content: {
+        ...this.state.content,
+        ...content,
+        value: null,
+        preview: null
+      }
+    })
+  }
+
+  contentChangeHandler = event => {
+    const category = this.state.inputs.category.value
+    let content =
+      category === 'videos'
+        ? {
+            value: event.target.value,
+            preview: event.target.value
+          }
+        : {
+            value: event.target.files[0],
+            preview: event.target.files[0]
+              ? URL.createObjectURL(event.target.files[0])
+              : ''
+          }
     this.setState({
       content: {
         ...this.state.content,
@@ -105,118 +107,34 @@ class PostCreate extends Component {
       }
     })
   }
-  get image_url() {
-    return this.state.content.preview
-  }
-
-  renderInputFile() {
-    const category = this.state.inputs.category.value
-    if (!category) return null
-    if (category === 'images') {
-      return (
-        <FileInput
-          className={this.props.classes.uploadButton}
-          type="file"
-          raised
-          onChange={this.contentChangeHandler(category)}
-          accept=".png,.jpg"
-        >
-          Image Upload
-          <FileUpload className={this.props.classes.rightIcon} />
-        </FileInput>
-      )
-    }
-    if (category === 'gifs') {
-      return (
-        <FileInput
-          className={this.props.classes.uploadButton}
-          raised
-          type="file"
-          onChange={this.contentChangeHandler(category)}
-          accept=".gif"
-        >
-          Gif Upload
-          <FileUpload className={this.props.classes.rightIcon} />
-        </FileInput>
-      )
-    }
-    if (category === 'videos') {
-      return (
-        <TextInput
-          label={'Video Url'}
-          onChange={this.contentChangeHandler(category)}
-        />
-      )
-    }
-  }
 
   handleSubmit = event => {
     event.preventDefault()
   }
+
   render() {
     const { inputs } = this.state
-    const { classes } = this.props
+    const { validate } = this.props
     return (
-      <Card className={classes.root}>
-        <form onSubmit={this.handleSubmit}>
-          <Grid container direction="column" className={classes.body}>
-            <h3 className={classes.title}>Meme Creation</h3>
-            {map(
-              inputs,
-              (
-                { value, type, label, multiline, rows, select, options },
-                name
-              ) => (
-                <TextInput
-                  className={classes.textField}
-                  onChange={this.textChangeHandler(name)}
-                  select={select}
-                  key={name}
-                  multiline={multiline}
-                  rows={rows}
-                  value={value}
-                  type={type}
-                  label={label}
-                >
-                  {select &&
-                    options.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                </TextInput>
-              )
-            )}
-            {this.renderInputFile()}
-            <Grid
-              container
-              justify="center"
-              alignItems="center"
-              className={classes.preview}
-            >
-              {this.image_url && (
-                <img
-                  style={{ maxWidth: '100%', maxHeight: '100%' }}
-                  src={this.image_url}
-                  alt="test"
-                />
-              )}
-            </Grid>
-            <div style={{ textAlign: 'center' }}>
-              <Button
-                type="submit"
-                color="primary"
-                raised
-                className={classes.submitButton}
-              >
-                Create
-              </Button>
-            </div>
-          </Grid>
-        </form>
-      </Card>
+      <PostCreateForm
+        inputs={inputs}
+        inputContent={this.state.content}
+        onTextChange={this.textChangeHandler}
+        onContentChange={this.contentChangeHandler}
+        onSubmit={this.handleSubmit}
+        validate={validate}
+      />
     )
   }
 }
 
-export default withStyles(style)(PostCreate)
+const rules = {
+  validate: createValidation({
+    title: [required],
+    description: [len(5, 60)],
+    category: [required],
+    content: [required]
+  })
+}
+
+export default withValidation(rules)(PostCreate)

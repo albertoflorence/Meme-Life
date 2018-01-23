@@ -36,8 +36,12 @@ export const password = value =>
     ? null
     : 'Please, provide a password with at least 6 length long'
 
-export const required = (value, fieldName) =>
-  value.trim().length > 0 ? null : `${fieldName} is required`
+export const required = (value, fieldName) => {
+  if (typeof value === 'string' && value.trim().length > 0) return null
+  if (!value) return `${fieldName} is required`
+
+  return null
+}
 
 export const len = (min, max) => (value, fieldName) => {
   if (value.trim().length < min) return `the ${fieldName} is too short`

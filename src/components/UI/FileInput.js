@@ -11,11 +11,11 @@ const style = {
   opacity: 0
 }
 
-const FileInput = ({ label, children, ...props }) => {
+const FileInput = ({ label, children, accept, inputProps, ...props }) => {
   return (
     <Button {...props}>
       {label || children}
-      <input type="file" style={style} />
+      <input type="file" style={style} accept={accept} {...inputProps} />
     </Button>
   )
 }
