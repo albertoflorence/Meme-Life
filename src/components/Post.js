@@ -3,7 +3,7 @@ import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardHeader, CardContent } from 'material-ui/Card'
 import { Button, Typography, Avatar, Grid, Divider } from 'material-ui'
 import { Share, Comment } from 'material-ui-icons'
-
+import Link from 'react-router-dom/Link'
 const styles = theme => ({
   root: {
     flexGlow: 1,
@@ -46,25 +46,8 @@ const styles = theme => ({
 })
 
 class Post extends Component {
-  state = {
-    post: {
-      title: 'Velocidade 5x maior que a da luz',
-      content_url: 'https://leninja.com.br/wp-content/uploads/2018/01/luz.jpg',
-      created_at: '1 hour ago',
-      category: 'imagens',
-      description:
-        'asdbhsauhdsauihdsa muito engraçado !! \n best comentário ever ',
-      author: {
-        name: 'Alberto Florence',
-        avatar:
-          'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAMAAgDGAAwAAQAAAAAAAApGAAAAJDUzMmZhODNhLWExNjktNDk4OS1iZWY4LWNjNDUwMTMzNDQyNQ.jpg'
-      }
-    }
-  }
-
   render() {
-    const { post } = this.state
-    const { classes } = this.props
+    const { classes, post } = this.props
     return (
       <Card className={classes.root}>
         <Grid
@@ -98,7 +81,7 @@ class Post extends Component {
           component="h2"
           className={classes.name}
         >
-          {post.title}
+          <Link to={'/posts/' + post.id}> {post.title} </Link>
         </Typography>
         <Grid className={classes.mediaBody}>
           <img src={post.content_url} alt="" className={classes.media} />

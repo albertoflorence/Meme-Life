@@ -3,10 +3,11 @@ import './App.css'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { blue, red } from 'material-ui/colors'
-import PostContainer from './containers/PostContainer'
+import PostsContainer from './containers/PostsContainer'
 import Layout from './components/Layout'
 import HeaderContainer from './containers/HeaderContainer'
-import PostCreate from './components/PostCreate'
+import PostContainer from './containers/PostContainer'
+import PostCreateContainer from './containers/PostCreateContainer';
 
 const theme = createMuiTheme({
   palette: {
@@ -32,10 +33,17 @@ class App extends Component {
             <HeaderContainer />
             <Layout>
               <Switch>
-                <Route path="/" exact component={PostContainer} />
-                <Route path="/post/create" exact component={PostCreate} />
+                <Route path="/" exact component={PostsContainer} />
+                <Route path="/post/create" exact component={PostCreateContainer} />
+                <Route
+                  path="/posts/category/:category"
+                  exact
+                  component={PostsContainer}
+                />
+                <Route path="/posts/:id" exact component={PostContainer} />
               </Switch>
             </Layout>
+            <div style={{ height: '300px', width: '100%' }}> </div>
           </Fragment>
         </BrowserRouter>
       </MuiThemeProvider>
