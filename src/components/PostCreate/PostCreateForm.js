@@ -1,11 +1,11 @@
 import React from 'react'
-import { map } from '../util/index'
-import TextInput from './UI/TextInput'
-import { Grid, MenuItem, Button } from 'material-ui'
 import Card from 'material-ui/Card/Card'
 import withStyles from 'material-ui/styles/withStyles'
 import FileUpload from 'material-ui-icons/FileUpload'
-import FileInput from './UI/FileInput'
+import { Grid, MenuItem, Button } from 'material-ui'
+import { map } from '../../util/index'
+import TextInput from '../UI/TextInput'
+import FileInput from '../UI/FileInput'
 
 const style = theme => ({
   root: {

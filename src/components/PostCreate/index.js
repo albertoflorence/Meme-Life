@@ -3,7 +3,7 @@ import withValidation, {
   createValidation,
   len,
   required
-} from '../HOC/withValidation'
+} from '../../HOC/withValidation'
 import PostCreateForm from './PostCreateForm'
 
 class PostCreate extends Component {
@@ -108,8 +108,12 @@ class PostCreate extends Component {
     })
   }
 
-  handleSubmit = event => {
+  submitHandler = event => {
     event.preventDefault()
+    this.props.onSubmit(event, {
+      ...this.state.inputs,
+      content: this.state.content
+    })
   }
 
   render() {
@@ -121,7 +125,7 @@ class PostCreate extends Component {
         inputContent={this.state.content}
         onTextChange={this.textChangeHandler}
         onContentChange={this.contentChangeHandler}
-        onSubmit={this.handleSubmit}
+        onSubmit={this.submitHandler}
         validate={validate}
       />
     )

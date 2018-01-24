@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import Header from '../components/Header/index'
+import Header from '../components/Header/Toolbar'
 import AuthContainer from './AuthContainer'
 class HeaderContainer extends Component {
   state = {
     isAuthenticated: true,
     itemsCenter: [
       { name: 'IMAGES', link: '/posts/category/images' },
-      { name: 'videos', link: '/posts/category/videos' },
-      { name: 'gifs', link: '/posts/category/gifs' }
+      { name: 'VIDEOS', link: '/posts/category/videos' },
+      { name: 'GIFS', link: '/posts/category/gifs' }
     ]
   }
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import withValidation, {
   email,
   password,
-  required,
   len,
   createValidation
 } from '../../HOC/withValidation'
@@ -59,7 +58,7 @@ const rules = {
   validate: createValidation({
     email: [email],
     password: [password],
-    name: [len(4, 32)]
+    name: [len(10, 32)]
   })
 }
 

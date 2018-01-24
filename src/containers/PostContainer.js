@@ -1,22 +1,30 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Post from '../components/Post'
 import { CircularProgress } from 'material-ui/Progress'
 
-import { getPosts } from '../services/api'
+import { getPostById } from '../services/api'
+import Comments from '../components/Comments/index'
 
 class PostContainer extends Component {
   state = {
-    posts: null
+    post: null
   }
 
   componentDidMount() {
-    getPosts().then(posts => this.setState({ posts }))
+    getPostById(this.props.match.params.id).then(post =>
+      this.setState({ post })
+    )
   }
 
+  componentDidUpdate(prevProps) {}
+
   render() {
-    const { posts } = this.state
-    const render = posts ? (
-      posts.map(post => <Post key={post.id} post={post} />)
+    const { post } = this.state
+    const render = post ? (
+      <Fragment>
+        <Post post={post} />
+        <Comments comments={post.comments} />
+      </Fragment>
     ) : (
       <CircularProgress />
     )

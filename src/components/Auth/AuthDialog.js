@@ -31,7 +31,7 @@ const style = theme => ({
 
 class LoginDialog extends React.Component {
   state = {
-    open: true,
+    open: false,
     tabIndex: 0
   }
 
@@ -76,7 +76,7 @@ class LoginDialog extends React.Component {
           </AppBar>
           <DialogContent>
             {tabIndex === 0 && <Login onSubmit={onSubmit('login')} />}
-            {tabIndex === 1 && <Register onSubmit={onSubmit('regsiter')} />}
+            {tabIndex === 1 && <Register onSubmit={onSubmit('register')} />}
           </DialogContent>
         </Dialog>
       </div>
