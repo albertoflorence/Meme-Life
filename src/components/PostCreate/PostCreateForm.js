@@ -6,6 +6,7 @@ import { Grid, MenuItem, Button } from 'material-ui'
 import { map } from '../../util/index'
 import TextInput from '../UI/TextInput'
 import FileInput from '../UI/FileInput'
+import Content from '../Content'
 
 const style = theme => ({
   root: {
@@ -25,12 +26,10 @@ const style = theme => ({
     marginBottom: theme.spacing.unit * 3
   },
   preview: {
-    maxWidth: '100%',
-    height: '200px',
+    width: '100%',
+    height: '300px',
     padding: '20px'
   },
-  previewContent: { maxWidth: '100%', maxHeight: '100%' },
-
   rightIcon: {
     marginLeft: theme.spacing.unit
   },
@@ -40,7 +39,9 @@ const style = theme => ({
     border: '1px solid rgba(0, 0, 0, 0.4)',
     color: theme.palette.primary.main
   },
-  submitButton: {}
+  submitButton: {
+    marginTop: theme.spacing.unit * 2
+  }
 })
 
 const PostCreate = ({
@@ -92,14 +93,19 @@ const PostCreate = ({
               validate
             )}
 
-          <Grid
-            container
-            justify="center"
-            alignItems="center"
-            className={classes.preview}
-          >
-            {renderPreview(inputContent, classes)}
-          </Grid>
+          {inputContent.value && (
+            <Grid
+              container
+              justify="center"
+              alignItems="center"
+              className={classes.preview}
+            >
+              <Content
+                url={inputContent.preview}
+                category={inputs.category.value}
+              />
+            </Grid>
+          )}
           <div style={{ textAlign: 'center' }}>
             <Button
               type="submit"
@@ -149,22 +155,6 @@ const renderContentInput = (
       label={label}
     />
   )
-}
-
-const renderPreview = ({ preview }, classes) => {
-  if (!preview) return
-  const type = preview.slice(0, 4)
-  if (type === 'blob')
-    return <img className={classes.previewContent} src={preview} alt="test" />
-  else if (type === 'http') {
-    return (
-      <iframe
-        title={'Video Preview'}
-        className={classes.previewContent}
-        src={preview.replace('watch?v=', 'embed/')}
-      />
-    )
-  }
 }
 
 export default withStyles(style)(PostCreate)

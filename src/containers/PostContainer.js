@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import Post from '../components/Post'
 import { CircularProgress } from 'material-ui/Progress'
 
-import { getPostById } from '../services/api'
+import { getPostById } from '../services/posts'
 import Comments from '../components/Comments/index'
 
 class PostContainer extends Component {

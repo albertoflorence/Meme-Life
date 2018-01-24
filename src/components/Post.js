@@ -4,6 +4,7 @@ import Card, { CardActions, CardHeader, CardContent } from 'material-ui/Card'
 import { Button, Typography, Avatar, Grid, Divider } from 'material-ui'
 import { Share, Comment } from 'material-ui-icons'
 import Link from 'react-router-dom/Link'
+import Content from './Content'
 const styles = theme => ({
   root: {
     flexGlow: 1,
@@ -17,7 +18,7 @@ const styles = theme => ({
   },
   media: {
     width: '100%',
-    maxHeight: '100%'
+    height: 'auto'
   },
   mediaBody: {
     border: '1px solid rgba(0, 0, 0, 0.5)',
@@ -81,10 +82,10 @@ class Post extends Component {
           component="h2"
           className={classes.name}
         >
-          <Link to={'/posts/' + post.id}> {post.title} </Link>
+          <Link to={'/posts/' + post._id}> {post.title} </Link>
         </Typography>
         <Grid className={classes.mediaBody}>
-          <img src={post.content_url} alt="" className={classes.media} />
+          <Content url={post.content_url} category={post.category} />
         </Grid>
         <CardContent>
           <Typography className={classes.description}>
