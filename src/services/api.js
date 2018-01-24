@@ -1,11 +1,7 @@
-export const getPosts = category => Promise.resolve()
-
-export const getPostById = id => Promise.resolve()
-
-export const creatPost = data => Promise.resolve()
+import { queryParser } from '../util/index'
 
 const baseUrl = 'http://localhost:8000/'
-export const get = url => fetch(baseUrl + url)
+export const get = (url, params) => fetch(baseUrl + url + queryParser(params))
 
 export const post = (url, body) =>
   fetch(baseUrl + url, {

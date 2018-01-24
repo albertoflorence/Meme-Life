@@ -49,6 +49,18 @@ export const transformDate = posts =>
     created_at: formatTime(new Date() - new Date(post.created_at))
   }))
 
+export const queryParser = obj => {
+  if (!obj) return ''
+  let string = '?'
+  let querys = []
+  for (let key in obj) {
+    if (!obj[key]) continue
+    querys.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]))
+  }
+  string += querys.join('&')
+  return string
+}
+
 const formatTime = (time, i = 0) => {
   const arr = [1000, 60, 60, 24, 7, 4, 12]
   const names = [

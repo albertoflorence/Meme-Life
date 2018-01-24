@@ -2,7 +2,7 @@ import { get, post } from './api'
 import { transformDate } from '../util/index'
 
 export const getPosts = category =>
-  get(`posts?category=${category}`)
+  get('posts', { category })
     .then(response => response.json())
     .then(transformDate)
 
