@@ -1,5 +1,5 @@
-import { postJson } from './api'
+import { post, toJSON } from './api'
 
-export const signIn = data => postJson('users/signIn', data)
+export const signIn = data => post('users/signin', data).then(toJSON)
 
-export const signUp = data => postJson('users/signUp', data)
+export const signUp = data => post('users/signup', data).then(toJSON)
