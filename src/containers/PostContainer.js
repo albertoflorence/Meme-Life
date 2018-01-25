@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import Post from '../components/Post'
+import Post from '../components/Post/index'
 import { CircularProgress } from 'material-ui/Progress'
 
 import { getPostById } from '../services/posts'
