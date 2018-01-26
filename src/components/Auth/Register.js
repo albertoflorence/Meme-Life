@@ -10,6 +10,11 @@ import AuthForm from './AuthForm'
 class Register extends Component {
   state = {
     inputs: {
+      name: {
+        value: '',
+        label: 'Name',
+        type: 'text'
+      },
       email: {
         value: '',
         label: 'Email',
@@ -19,11 +24,6 @@ class Register extends Component {
         value: '',
         label: 'Password',
         type: 'password'
-      },
-      name: {
-        value: '',
-        label: 'Name',
-        type: 'text'
       }
     }
   }
@@ -58,7 +58,7 @@ const rules = {
   validate: createValidation({
     email: [email],
     password: [password],
-    name: [len(10, 32)]
+    name: [len(4, 32)]
   })
 }
 

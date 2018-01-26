@@ -18,10 +18,7 @@ const style = theme => ({
     backgroundColor: theme.palette.primary.dark,
     justifyContent: 'center'
   },
-  root: {
-    minHeight: '500px',
-    width: '550px'
-  },
+  root: {},
   title: {
     color: 'white',
     fontWeight: 'bold',

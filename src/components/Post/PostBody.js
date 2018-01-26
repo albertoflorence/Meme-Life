@@ -15,6 +15,14 @@ const styles = theme => ({
     width: '100%',
     height: 'auto',
     boxSizing: 'border-box'
+  },
+  title: {
+    textDecoration: 'none',
+    fontSize: '28px',
+    transition: '250ms',
+    '&:hover': {
+      color: theme.palette.secondary.main
+    }
   }
 })
 
@@ -30,10 +38,12 @@ const PostBody = ({
     <Typography
       style={{ padding: '18px', textAlign: 'center' }}
       type="headline"
-      component="h2"
+      component="h1"
       className={classes.name}
     >
-      <Link to={'/posts/' + _id}> {title} </Link>
+      <Link to={'/posts/' + _id} className={classes.title}>
+        {title}
+      </Link>
     </Typography>
     <Grid className={classes.mediaBody}>
       <Content url={content_url} category={category} />

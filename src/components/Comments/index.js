@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
 import { TextField, Grid } from 'material-ui'
-import purple from 'material-ui/colors/purple'
 import Button from 'material-ui/Button/Button'
 import Comment from './Comment'
 
@@ -31,47 +30,68 @@ const styles = theme => ({
   },
   textFieldFormLabel: {
     fontSize: 18
+  },
+  buttonPost: {
+    color: 'white',
+    fontWeight: 'bold',
+    backgroundColor: '#4d94ff'
+  },
+  buttonPostWrapper: {
+    textAlign: 'right',
+    marginTop: '5px'
   }
 })
 
-function Comments(props) {
-  const { classes, comments } = props
+class Comments extends Component {
+  state = {
+    comment: ''
+  }
+  textChangeHandler = event => {
+    this.setState({
+      comment: event.target.value
+    })
+  }
 
-  return (
-    <Grid container direction="column" alignItems="stretch">
-      <TextField
-        defaultValue=""
-        multiline
-        rows={3}
-        placeholder="Enter your comments here."
-        InputProps={{
-          disableUnderline: true,
-          classes: {
-            root: classes.textFieldRoot,
-            input: classes.textFieldInput
-          }
-        }}
-        InputLabelProps={{
-          shrink: true,
-          className: classes.textFieldFormLabel
-        }}
-      />
-      <div style={{ textAlign: 'right', marginTop: '5px' }}>
-        <Button
-          raised
-          style={{
-            color: 'white',
-            fontWeight: 'bold',
-            backgroundColor: '#4d94ff'
+  render() {
+    const { classes, onSubmitComment, comments } = this.props
+    const { comment } = this.state
+    return (
+      <Grid container direction="column" alignItems="stretch">
+        <TextField
+          value={comment}
+          onChange={this.textChangeHandler}
+          multiline
+          rows={3}
+          placeholder="Enter your comments here."
+          InputProps={{
+            disableUnderline: true,
+            classes: {
+              root: classes.textFieldRoot,
+              input: classes.textFieldInput
+            }
           }}
-        >
-          Post
-        </Button>
-      </div>
+          InputLabelProps={{
+            shrink: true,
+            className: classes.textFieldFormLabel
+          }}
+        />
+        <div className={classes.buttonPostWrapper}>
+          <Button
+            raised
+            className={classes.buttonPost}
+            disabled={comment.length === 0}
+            onClick={() => comment && onSubmitComment(comment)}
+          >
+            Post
+          </Button>
+        </div>
 
-      {comments.map(comment => <Comment key={comment.id} comment={comment} />)}
-    </Grid>
-  )
+        {comments.map(comment => (
+          <Comment key={comment._id} comment={comment} />
+        ))}
+      </Grid>
+    )
+  }
 }
 
 export default withStyles(styles)(Comments)

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import Post from '../components/Post/index'
 import { CircularProgress } from 'material-ui/Progress'
 
-import { getPostById } from '../services/posts'
+import { getPostById, createComment } from '../services/posts'
 import Comments from '../components/Comments/index'
 
 class PostContainer extends Component {
@@ -18,12 +18,19 @@ class PostContainer extends Component {
 
   componentDidUpdate(prevProps) {}
 
+  submitCommentHandler = body => {
+    createComment({ body, postId: this.state.post._id })
+  }
+
   render() {
     const { post } = this.state
     const render = post ? (
       <Fragment>
         <Post post={post} />
-        <Comments comments={post.comments} />
+        <Comments
+          comments={post.comments}
+          onSubmitComment={this.submitCommentHandler}
+        />
       </Fragment>
     ) : (
       <CircularProgress />

@@ -46,7 +46,7 @@ export const toFormData = object =>
 export const transformDate = posts =>
   posts.map(post => ({
     ...post,
-    created_at: formatTime(new Date() - new Date(post.created_at))
+    createdAt: formatTime(new Date() - new Date(post.createdAt))
   }))
 
 export const queryParser = obj => {

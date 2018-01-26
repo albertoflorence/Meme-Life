@@ -4,6 +4,7 @@ import { Card, Divider } from 'material-ui'
 import PostHeader from './PostHeader'
 import PostBody from './PostBody'
 import PostFooter from './PostFooter'
+import { likePost } from '../../services/posts'
 
 const styles = theme => ({
   root: {
@@ -15,6 +16,13 @@ const styles = theme => ({
 })
 
 class Post extends Component {
+  handleLike = () => {
+    const postId = this.props.post._id
+    likePost({ postId })
+  }
+
+  handleShare = () => {}
+
   render() {
     const { classes, post } = this.props
     const {
@@ -24,8 +32,11 @@ class Post extends Component {
       description,
       _id,
       content_url,
-      title
+      title,
+      comments,
+      likes
     } = post
+
     return (
       <Card className={classes.root}>
         <PostHeader category={category} createdAt={createdAt} author={author} />
@@ -40,7 +51,13 @@ class Post extends Component {
           category={category}
         />
         <Divider />
-        <PostFooter _id={_id} />
+        <PostFooter
+          _id={_id}
+          likesCount={likes.length}
+          commentsCount={comments.length}
+          onShare={this.handleShare}
+          onLike={this.handleLike}
+        />
       </Card>
     )
   }

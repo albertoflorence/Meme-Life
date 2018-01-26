@@ -7,18 +7,18 @@ import PostsContainer from './containers/PostsContainer'
 import Layout from './components/Layout'
 import HeaderContainer from './containers/HeaderContainer'
 import PostContainer from './containers/PostContainer'
-import PostCreateContainer from './containers/PostCreateContainer';
+import PostCreateContainer from './containers/PostCreateContainer'
 
 const theme = createMuiTheme({
   palette: {
     primary: {
       light: blue[300],
-      main: blue[500],
+      main: '#192f62',
       dark: '#24292e'
     },
     secondary: {
       light: red[300],
-      main: red[500],
+      main: '#C30000',
       dark: red[700]
     }
   }
@@ -34,7 +34,11 @@ class App extends Component {
             <Layout>
               <Switch>
                 <Route path="/" exact component={PostsContainer} />
-                <Route path="/post/create" exact component={PostCreateContainer} />
+                <Route
+                  path="/post/create"
+                  exact
+                  component={PostCreateContainer}
+                />
                 <Route
                   path="/posts/category/:category"
                   exact

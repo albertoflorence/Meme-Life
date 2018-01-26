@@ -21,7 +21,6 @@ const styles = theme => ({
 class Comment extends React.Component {
   render() {
     const { classes, comment } = this.props
-
     return (
       <div className={classes.root}>
         <List subheader={<ListSubheader>{comment.author.name}</ListSubheader>}>

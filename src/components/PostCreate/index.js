@@ -118,7 +118,7 @@ class PostCreate extends Component {
 
   render() {
     const { inputs } = this.state
-    const { validate } = this.props
+    const { validate, isLoading } = this.props
     return (
       <PostCreateForm
         inputs={inputs}

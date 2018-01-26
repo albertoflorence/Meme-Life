@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { withStyles } from 'material-ui/styles'
-import { Typography, Avatar, Grid, Divider, CardHeader } from 'material-ui'
+import { Avatar, Grid, CardHeader } from 'material-ui'
 import Link from 'react-router-dom/Link'
 
 const styles = theme => ({
@@ -8,13 +8,23 @@ const styles = theme => ({
     padding: '15px',
     paddingRight: '25px'
   },
+  title: {
+    color: theme.palette.primary.main,
+    fontWeight: 'bold'
+  },
   category: {
-    border: '1px solid rgba(0, 0, 0, 0.3)',
+    border: '1px dashed',
     borderRadius: '10px 10px 10px 10px',
-    height: 'max-content',
+    color: '#909090',
+    fontSize: '11px',
+    padding: '5px 15px 5px 15px',
     textTransform: 'uppercase',
-    color: 'grey',
-    fontSize: '11px'
+    textDecoration: 'none',
+    transition: '250ms',
+    '&:hover': {
+      color: theme.palette.secondary.main,
+      border: '1px solid'
+    }
   }
 })
 
@@ -28,6 +38,7 @@ const PostHeader = ({ author, createdAt, category, classes }) => (
     >
       <Grid item>
         <CardHeader
+          classes={{ title: classes.title }}
           style={{ padding: 0 }}
           title={author.name}
           avatar={
@@ -38,9 +49,9 @@ const PostHeader = ({ author, createdAt, category, classes }) => (
           subheader={createdAt}
         />
       </Grid>
-      <Grid item className={classes.category}>
+      <Link className={classes.category} to={'/posts/category/' + category}>
         {category}
-      </Grid>
+      </Link>
     </Grid>
   </Fragment>
 )
