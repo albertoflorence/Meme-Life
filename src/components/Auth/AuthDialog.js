@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import {
   Button,
   DialogContent,
@@ -12,13 +12,15 @@ import {
 import Login from './Login'
 import Register from './Register'
 import withStyles from 'material-ui/styles/withStyles'
+import CircularProgress from 'material-ui/Progress/CircularProgress'
+import Alert from '../UI/Alert'
 
 const style = theme => ({
   toolbar: {
     backgroundColor: theme.palette.primary.dark,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: '20px'
   },
-  root: {},
   title: {
     color: 'white',
     fontWeight: 'bold',
@@ -46,7 +48,7 @@ class LoginDialog extends React.Component {
 
   render() {
     const { tabIndex } = this.state
-    const { classes, onSubmit } = this.props
+    const { classes, onSubmit, isLoading, error } = this.props
     return (
       <div>
         <Button onClick={this.handleClickOpen} className={classes.title}>
@@ -72,8 +74,17 @@ class LoginDialog extends React.Component {
             </DialogTitle>
           </AppBar>
           <DialogContent>
-            {tabIndex === 0 && <Login onSubmit={onSubmit('login')} />}
-            {tabIndex === 1 && <Register onSubmit={onSubmit('register')} />}
+            <Alert type="danger">{error}</Alert>
+            {isLoading ? (
+              <div style={{ textAlign: 'center' }}>
+                {isLoading && <CircularProgress />}
+              </div>
+            ) : (
+              <Fragment>
+                {tabIndex === 0 && <Login onSubmit={onSubmit('login')} />}
+                {tabIndex === 1 && <Register onSubmit={onSubmit('register')} />}
+              </Fragment>
+            )}
           </DialogContent>
         </Dialog>
       </div>

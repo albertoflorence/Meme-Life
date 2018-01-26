@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import Header from '../components/Header/Toolbar'
 import AuthContainer from './AuthContainer'
+import { getIsAuthenticated } from '../store/reducers'
+import { connect } from 'react-redux'
 class HeaderContainer extends Component {
   state = {
-    isAuthenticated: true,
     itemsCenter: [
       { name: 'IMAGES', link: '/posts/category/images' },
       { name: 'VIDEOS', link: '/posts/category/videos' },
@@ -12,7 +13,7 @@ class HeaderContainer extends Component {
   }
 
   get itemsRight() {
-    const { isAuthenticated } = this.state
+    const { isAuthenticated } = this.props
     return isAuthenticated
       ? [
           { name: 'create', link: '/post/create' },
@@ -31,4 +32,8 @@ class HeaderContainer extends Component {
   }
 }
 
-export default HeaderContainer
+const mapStateToProps = state => ({
+  isAuthenticated: getIsAuthenticated(state)
+})
+
+export default connect(mapStateToProps)(HeaderContainer)
