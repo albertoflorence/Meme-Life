@@ -6,15 +6,13 @@ export const async = ({ dispatch, getState }) => next => action => {
   const { api, success, label } = action.payload
 
   dispatch(asyncStart(label))
-  return api
-    .then(data => {
+  return api.then(
+    data => {
       dispatch(asyncEnd(label))
       return dispatch(success(data))
-    })
-    .catch(error => {
-      console.log(error)
-      return dispatch(asyncError(error, label))
-    })
+    },
+    error => dispatch(asyncError(error, label))
+  )
 }
 
 export const localStorageMiddleware = ({

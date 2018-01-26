@@ -36,4 +36,10 @@ export const put = (url, body) =>
 export const patch = (url, body) =>
   makeHttpMethodJSON('PATCH')(url, JSON.stringify(body))
 
-export const toJSON = response => response.json()
+export const toJSON = async res => {
+  if (res.ok) {
+    return res.json()
+  }
+  const response = await res.json()
+  return Promise.reject(response)
+}
