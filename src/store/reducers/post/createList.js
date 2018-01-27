@@ -2,9 +2,10 @@ import { FETCH_POSTS } from '../../constants'
 
 const createList = filter => {
   const ids = (state = [], action) => {
+    if (action.filter !== filter) return state
     switch (action.type) {
       case FETCH_POSTS:
-        return filter === action.filter ? action.result : state
+        return action.result
       default:
         return state
     }

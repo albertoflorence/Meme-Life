@@ -20,3 +20,7 @@ export const getPosts = (state, filter = 'all') => {
   const ids = fromList.getIds(state.listByFilter[filter])
   return ids.map(id => fromById.getPost(state.byId, id))
 }
+
+export const getPost = ({ byId }, id) => {
+  return fromById.getPost(byId, id)
+}

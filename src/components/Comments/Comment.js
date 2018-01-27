@@ -23,7 +23,8 @@ class Comment extends React.Component {
     const { classes, comment } = this.props
     return (
       <div className={classes.root}>
-        <List subheader={<ListSubheader>{comment.author.name}</ListSubheader>}>
+        <List>
+          <ListSubheader>{comment.author.name}</ListSubheader>
           <ListItem>
             <ListItemAvatar>
               <Avatar src={comment.author.avatar} alt={comment.author.name}>

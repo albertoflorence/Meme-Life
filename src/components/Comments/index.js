@@ -52,8 +52,15 @@ class Comments extends Component {
     })
   }
 
+  handleSubmit = () => {
+    this.props.onSubmitComment(this.state.comment)
+    this.setState({
+      comment: ''
+    })
+  }
+
   render() {
-    const { classes, onSubmitComment, comments } = this.props
+    const { classes, comments } = this.props
     const { comment } = this.state
     return (
       <Grid container direction="column" alignItems="stretch">
@@ -80,7 +87,7 @@ class Comments extends Component {
             raised
             className={classes.buttonPost}
             disabled={comment.length === 0}
-            onClick={() => comment && onSubmitComment(comment)}
+            onClick={this.handleSubmit}
           >
             Post
           </Button>

@@ -22,3 +22,5 @@ export const getIsAuthenticated = ({ auth }) =>
   fromAuth.getIsAuthenticated(auth)
 
 export const getPosts = ({ post }, filter) => fromPost.getPosts(post, filter)
+
+export const getPost = ({ post }, id) => fromPost.getPost(post, id)
