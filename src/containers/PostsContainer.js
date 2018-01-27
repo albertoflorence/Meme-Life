@@ -1,29 +1,28 @@
 import React, { Component } from 'react'
 import Post from '../components/Post/index'
 import { CircularProgress } from 'material-ui/Progress'
+import { connect } from 'react-redux'
+import { fetchPosts } from '../store/actions'
+import { getPosts } from '../store/reducers'
 
-import { getPosts } from '../services/posts'
-
-class PostContainer extends Component {
-  state = {
-    posts: null
-  }
-
+class PostsContainer extends Component {
   componentDidMount() {
-    getPosts(this.props.match.params.category).then(posts =>
-      this.setState({ posts })
-    )
+    this.fetchData()
   }
 
   componentDidUpdate(prevProps) {
-    const { category } = this.props.match.params
-    if (prevProps.match.params.category !== category) {
-      getPosts(category).then(posts => this.setState({ posts }))
+    if (this.props.filter !== prevProps.filter) {
+      this.fetchData()
     }
   }
 
+  fetchData() {
+    const { fetchPosts, filter } = this.props
+    fetchPosts(filter)
+  }
+
   render() {
-    const { posts } = this.state
+    const { posts } = this.props
     const render = posts ? (
       posts.map(post => <Post key={post._id} post={post} />)
     ) : (
@@ -34,4 +33,12 @@ class PostContainer extends Component {
   }
 }
 
-export default PostContainer
+const mapStateToProps = (state, { match }) => {
+  const filter = match.params.category
+  return {
+    posts: getPosts(state, filter),
+    filter
+  }
+}
+
+export default connect(mapStateToProps, { fetchPosts })(PostsContainer)
