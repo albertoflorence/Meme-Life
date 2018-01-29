@@ -1,4 +1,9 @@
-import { FETCH_POSTS, FETCH_POST, ADD_POST_COMMENT } from '../../constants'
+import {
+  FETCH_POSTS,
+  FETCH_POST,
+  ADD_POST_COMMENT,
+  LIKE_POST
+} from '../../constants'
 
 const byId = (state = {}, action) => {
   switch (action.type) {
@@ -23,6 +28,14 @@ const byId = (state = {}, action) => {
             },
             ...state[action.postId].comments
           ]
+        }
+      }
+    case LIKE_POST:
+      return {
+        ...state,
+        [action.postId]: {
+          ...state[action.postId],
+          ...action.response
         }
       }
     default: {

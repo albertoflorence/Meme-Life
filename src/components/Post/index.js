@@ -4,7 +4,8 @@ import { Card, Divider } from 'material-ui'
 import PostHeader from './PostHeader'
 import PostBody from './PostBody'
 import PostFooter from './PostFooter'
-import { likePost } from '../../services/posts'
+import { likePost } from '../../store/actions'
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   root: {
@@ -18,7 +19,7 @@ const styles = theme => ({
 class Post extends Component {
   handleLike = () => {
     const postId = this.props.post._id
-    likePost({ postId })
+    this.props.likePost({ postId })
   }
 
   handleShare = () => {}
@@ -34,7 +35,10 @@ class Post extends Component {
       content_url,
       title,
       comments,
-      likes
+      commentsCount,
+      likesCount,
+      liked,
+      disliked
     } = post
 
     return (
@@ -53,8 +57,11 @@ class Post extends Component {
         <Divider />
         <PostFooter
           _id={_id}
-          likesCount={likes.length}
-          commentsCount={comments.length}
+          likesCount={likesCount}
+          commentsCount={commentsCount}
+          comments={comments}
+          liked={liked}
+          disliked={disliked}
           onShare={this.handleShare}
           onLike={this.handleLike}
         />
@@ -63,4 +70,4 @@ class Post extends Component {
   }
 }
 
-export default withStyles(styles)(Post)
+export default connect(null, { likePost })(withStyles(styles)(Post))

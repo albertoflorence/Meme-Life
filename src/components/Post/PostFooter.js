@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { withStyles } from 'material-ui/styles'
-import { Button, Grid, CardActions, IconButton, Badge } from 'material-ui'
+import { Grid, CardActions, IconButton, Badge } from 'material-ui'
 import { Share, Comment, Favorite } from 'material-ui-icons'
 import { Link } from 'react-router-dom'
 
@@ -20,6 +20,9 @@ const styles = theme => ({
     color: '#e91e63',
     width: 36,
     height: 36
+  },
+  disabled: {
+    color: 'grey'
   },
   badge: {
     root: {
@@ -47,13 +50,14 @@ const PostFooter = ({
   classes,
   commentsCount,
   likesCount,
+  liked,
   onLike,
   onShare
 }) => (
   <Fragment>
     <CardActions className={classes.bottom}>
       <Grid container justify="space-around">
-        <Link to={'posts/' + _id} className={classes.commentLink}>
+        <Link to={'/posts/' + _id} className={classes.commentLink}>
           <Comment className={classes.commentIcon} />
           <div
             style={{
@@ -71,7 +75,11 @@ const PostFooter = ({
         </IconButton>
         <IconButton onClick={onLike} className={classes.buttonIconSize}>
           <Badge badgeContent={likesCount} color="primary">
-            <Favorite className={classes.favorite} />
+            <Favorite
+              className={[classes.favorite, liked ? '' : classes.disabled].join(
+                ' '
+              )}
+            />
           </Badge>
         </IconButton>
       </Grid>
