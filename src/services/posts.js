@@ -1,15 +1,11 @@
-import { get, postFormData, toJSON, post } from './api'
-import { transformDate } from '../util/index'
+import api from './api'
 
-export const getPosts = category =>
-  get('posts', { category })
-    .then(toJSON)
-    .then(transformDate)
+export const getPosts = category => api.get('posts', { params: { category } })
 
-export const getPostById = id => get(`posts/${id}`).then(toJSON)
+export const getPostById = id => api.get(`posts/${id}`)
 
-export const createPost = data => postFormData('posts', data).then(toJSON)
+export const createPost = data => api.post('posts', data)
 
-export const createComment = data => post('posts/comments', data).then(toJSON)
+export const createComment = data => api.post('posts/comments', data)
 
-export const likePost = data => post('posts/like', data).then(toJSON)
+export const likePost = data => api.post('posts/like', data)

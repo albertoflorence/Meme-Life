@@ -1,45 +1,12 @@
-import { queryParser } from '../util/index'
+import axios from 'axios'
 
-const makeFetch = ({ baseUrl, headers }) => (method = 'get') => (
-  url,
-  params
-) => {
-  let query = ''
-  const options = { method }
+const api = axios.create({
+  baseURL: 'http://localhost:8000/'
+})
 
-  if (headers) {
-    options.headers = headers
-  }
-  if (method.toLowerCase() !== 'get' && params) {
-    options.body = params
-  } else if (params) {
-    query = queryParser(params)
-  }
+api.interceptors.response.use(
+  response => response.data,
+  error => Promise.reject(error.response.data)
+)
 
-  return fetch(baseUrl + url + query, options)
-}
-
-const baseUrl = 'http://localhost:8000/'
-const jsonHeader = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json'
-}
-const makeHttpMethodJSON = makeFetch({ baseUrl, headers: jsonHeader })
-const makeHttpMethod = makeFetch({ baseUrl })
-
-export const postFormData = makeHttpMethod('POST')
-export const get = makeHttpMethodJSON('GET')
-export const post = (url, body) =>
-  makeHttpMethodJSON('POST')(url, JSON.stringify(body))
-export const put = (url, body) =>
-  makeHttpMethodJSON('PUT')(url, JSON.stringify(body))
-export const patch = (url, body) =>
-  makeHttpMethodJSON('PATCH')(url, JSON.stringify(body))
-
-export const toJSON = async res => {
-  if (res.ok) {
-    return res.json()
-  }
-  const response = await res.json()
-  return Promise.reject(response)
-}
+export default api
