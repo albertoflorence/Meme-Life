@@ -1,8 +1,10 @@
 import { AUTH_SUCCESS, AUTH_LOGOUT, API } from './constants'
 import { asyncError, asyncStart, asyncEnd } from './actions'
+import axiosInstance from '../services/api'
 
 export const async = ({ dispatch, getState }) => next => action => {
   if (action.type !== API) return next(action)
+
   const { api, success, label } = action.payload
 
   dispatch(asyncStart(label))
@@ -21,8 +23,12 @@ export const localStorageMiddleware = ({
 }) => next => action => {
   if (action.type === AUTH_SUCCESS) {
     localStorage.setItem('token', action.token)
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${
+      action.token
+    }`
   } else if (action.type === AUTH_LOGOUT) {
     localStorage.setItem('token', null)
+    axiosInstance.defaults.headers.common['Authorization'] = null
   }
   next(action)
 }
