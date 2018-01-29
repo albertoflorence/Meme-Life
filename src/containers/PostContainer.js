@@ -5,7 +5,7 @@ import { CircularProgress } from 'material-ui/Progress'
 import Comments from '../components/Comments/index'
 import { connect } from 'react-redux'
 import { getPost } from '../store/reducers'
-import { fetchPostById, addComment } from '../store/actions'
+import { fetchPostById, addComment, replayComment } from '../store/actions'
 
 class PostContainer extends Component {
   componentDidMount() {
@@ -19,6 +19,10 @@ class PostContainer extends Component {
     )
   }
 
+  replayCommentHandler = data => {
+    this.props.replayComment(data)
+  }
+
   render() {
     const { post } = this.props
     const render = post ? (
@@ -28,6 +32,7 @@ class PostContainer extends Component {
           <Comments
             comments={post.comments}
             onSubmitComment={this.submitCommentHandler}
+            onReplay={this.replayCommentHandler}
           />
         )}
       </Fragment>
@@ -48,6 +53,8 @@ const mapStateToProps = (state, { match }) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchPostById, addComment })(
-  PostContainer
-)
+export default connect(mapStateToProps, {
+  fetchPostById,
+  addComment,
+  replayComment
+})(PostContainer)

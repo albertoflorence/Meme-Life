@@ -33,8 +33,7 @@ const styles = theme => ({
   },
   buttonPost: {
     color: 'white',
-    fontWeight: 'bold',
-    backgroundColor: '#4d94ff'
+    fontWeight: 'bold'
   },
   buttonPostWrapper: {
     textAlign: 'right',
@@ -60,7 +59,7 @@ class Comments extends Component {
   }
 
   render() {
-    const { classes, comments } = this.props
+    const { classes, comments, onReplay } = this.props
     const { comment } = this.state
     return (
       <Grid container direction="column" alignItems="stretch">
@@ -84,6 +83,7 @@ class Comments extends Component {
         />
         <div className={classes.buttonPostWrapper}>
           <Button
+            color={'primary'}
             raised
             className={classes.buttonPost}
             disabled={comment.length === 0}
@@ -94,7 +94,7 @@ class Comments extends Component {
         </div>
 
         {comments.map(comment => (
-          <Comment key={comment._id} comment={comment} />
+          <Comment onReplay={onReplay} key={comment._id} comment={comment} />
         ))}
       </Grid>
     )

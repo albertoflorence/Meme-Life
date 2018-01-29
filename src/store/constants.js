@@ -10,3 +10,5 @@ export const FETCH_POSTS = 'FETCH_POSTS'
 export const FETCH_POST = 'FETCH_POST'
 export const ADD_POST_COMMENT = 'ADD_POST_COMMENT'
 export const LIKE_POST = 'LIKE_POST'
+
+export const REPLAY_COMMENT = 'REPLAY_COMMENT'
