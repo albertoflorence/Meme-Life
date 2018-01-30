@@ -71,7 +71,7 @@ class Comment extends React.Component {
   }
 
   render() {
-    const { classes, comment, onReply, isFetching } = this.props
+    const { classes, comment, onReply } = this.props
     const { showReplies, replyMessage, showReplyInput } = this.state
     if (!comment) return null
     return (
