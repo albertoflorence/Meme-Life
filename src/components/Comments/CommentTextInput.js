@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { withStyles } from 'material-ui/styles'
-import { TextField, Grid } from 'material-ui'
+import { TextField } from 'material-ui'
 import Button from 'material-ui/Button/Button'
-import Comment from './Comment'
 
 const styles = theme => ({
   container: {
@@ -41,10 +40,11 @@ const styles = theme => ({
   }
 })
 
-class Comments extends Component {
+class CommentTextInput extends Component {
   state = {
     comment: ''
   }
+
   textChangeHandler = event => {
     this.setState({
       comment: event.target.value
@@ -59,11 +59,12 @@ class Comments extends Component {
   }
 
   render() {
-    const { classes, comments, onReplay } = this.props
+    const { classes } = this.props
     const { comment } = this.state
     return (
-      <Grid container direction="column" alignItems="stretch">
+      <Fragment>
         <TextField
+          fullWidth
           value={comment}
           onChange={this.textChangeHandler}
           multiline
@@ -92,13 +93,9 @@ class Comments extends Component {
             Post
           </Button>
         </div>
-
-        {comments.map(comment => (
-          <Comment onReplay={onReplay} key={comment._id} comment={comment} />
-        ))}
-      </Grid>
+      </Fragment>
     )
   }
 }
 
-export default withStyles(styles)(Comments)
+export default withStyles(styles)(CommentTextInput)

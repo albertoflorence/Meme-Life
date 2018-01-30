@@ -18,16 +18,7 @@ const byId = (state = {}, action) => {
         ...state,
         [action.postId]: {
           ...state[action.postId],
-          commentsCount: state[action.postId].commentsCount + 1,
-          comments: [
-            {
-              ...action.comment,
-              author: {
-                ...action.userInfo
-              }
-            },
-            ...state[action.postId].comments
-          ]
+          commentsCount: state[action.postId].commentsCount + 1
         }
       }
     case LIKE_POST:

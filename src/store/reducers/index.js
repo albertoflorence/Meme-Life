@@ -3,10 +3,12 @@ import auth, * as fromAuth from './auth'
 import error, * as fromError from './error'
 import isFetching, * as fromIsFetching from './isFetching'
 import post, * as fromPost from './post'
+import comment, * as fromComment from './comment'
 
 const rootReducer = combineReducers({
   auth,
   post,
+  comment,
   error,
   isFetching
 })
@@ -24,3 +26,5 @@ export const getIsAuthenticated = ({ auth }) =>
 export const getPosts = ({ post }, filter) => fromPost.getPosts(post, filter)
 
 export const getPost = ({ post }, id) => fromPost.getPost(post, id)
+
+export const getComments = ({ comment }) => fromComment.getComments(comment)

@@ -2,45 +2,25 @@ import React, { Component, Fragment } from 'react'
 import Post from '../components/Post/index'
 import { CircularProgress } from 'material-ui/Progress'
 
-import Comments from '../components/Comments/index'
 import { connect } from 'react-redux'
 import { getPost } from '../store/reducers'
-import { fetchPostById, addComment, replayComment } from '../store/actions'
+import { fetchPostById } from '../store/actions'
+import CommentContainer from './CommentContainer'
 
 class PostContainer extends Component {
   componentDidMount() {
     this.props.fetchPostById(this.props.postId)
   }
 
-  submitCommentHandler = body => {
-    this.props.addComment(
-      { body, postId: this.props.postId },
-      this.props.userInfo
-    )
-  }
-
-  replayCommentHandler = data => {
-    this.props.replayComment(data)
-  }
-
   render() {
     const { post } = this.props
-    const render = post ? (
+    if (!post) return <CircularProgress />
+    return (
       <Fragment>
         <Post post={post} />
-        {post.comments && (
-          <Comments
-            comments={post.comments}
-            onSubmitComment={this.submitCommentHandler}
-            onReplay={this.replayCommentHandler}
-          />
-        )}
+        <CommentContainer postId={post._id} />
       </Fragment>
-    ) : (
-      <CircularProgress />
     )
-
-    return render
   }
 }
 
@@ -48,13 +28,10 @@ const mapStateToProps = (state, { match }) => {
   const postId = match.params.id
   return {
     post: getPost(state, postId),
-    postId,
-    userInfo: state.auth.user
+    postId
   }
 }
 
 export default connect(mapStateToProps, {
-  fetchPostById,
-  addComment,
-  replayComment
+  fetchPostById
 })(PostContainer)

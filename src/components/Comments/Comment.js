@@ -1,6 +1,11 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
 import { Avatar, Button, TextField } from 'material-ui'
+import ExpandLess from 'material-ui-icons/ExpandLess'
+import ExpandMore from 'material-ui-icons/ExpandMore'
+import CircularProgress from 'material-ui/Progress/CircularProgress'
+import TimeAgo from '../UI/TimeAgo'
+import Reply from './Comment'
 
 const styles = theme => ({
   root: {
@@ -8,7 +13,7 @@ const styles = theme => ({
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper
   },
-  replayButton: {
+  replyButton: {
     fontSize: '11px',
     transition: '250ms',
     color: 'grey',
@@ -16,39 +21,59 @@ const styles = theme => ({
       fontWeight: 'bolder',
       backgroundColor: 'transparent'
     }
+  },
+  viewReplyButton: {
+    fontWeight: 'bolder',
+    textTransform: 'capitalize',
+    minHeight: '0px',
+    padding: '0px',
+    '&:hover': {
+      backgroundColor: 'transparent'
+    }
   }
 })
 
 class Comment extends React.Component {
   state = {
-    showReplay: false,
-    replayMessage: ''
+    showReplyInput: false,
+    showReplies: false,
+    replyMessage: ''
   }
 
-  openReplay = () => {
-    this.setState({ showReplay: true })
+  openReply = () => {
+    this.setState({ showReplyInput: true })
   }
 
-  closeReplay = () => {
-    this.setState({ showReplay: false })
+  closeReply = () => {
+    this.setState({ showReplyInput: false })
+  }
+
+  showRepliesHandler = commentId => () => {
+    const { replies, repliesCount } = this.props.comment
+    this.setState(prevState => ({ showReplies: !prevState.showReplies }))
+    if (!this.props.comment.replies || repliesCount > replies.length) {
+      this.props.fetchReplies(commentId)
+    }
   }
 
   textChangeHandler = event => {
     this.setState({
-      replayMessage: event.target.value
+      replyMessage: event.target.value
     })
   }
 
-  submitCommentHandler = id => () => {
-    this.props.onReplay({
-      commentId: id,
-      body: this.state.replayMessage
-    })
+  renderReplies() {
+    if (this.props.isFetching) return <CircularProgress />
+    if (!this.state.showReplies || !this.props.comment.replies) return null
+    return this.props.comment.replies.map(reply => (
+      <Reply key={reply._id} comment={reply} onReply={this.props.onReply} />
+    ))
   }
 
   render() {
-    const { classes, comment } = this.props
-    const { showReplay, replayMessage } = this.state
+    const { classes, comment, onReply, isFetching } = this.props
+    const { showReplies, replyMessage, showReplyInput } = this.state
+    if (!comment) return null
     return (
       <div style={{ display: 'flex', alignItems: 'flex-start' }}>
         <div style={{ display: 'inline-block', marginRight: '10px' }}>
@@ -64,19 +89,15 @@ class Comment extends React.Component {
           }}
         >
           <div style={{ marginBottom: '5px' }}>
-            {comment.author.name}
-            <span
-              style={{ color: 'grey', fontSize: '12px', marginLeft: '10px' }}
-            >
-              {comment.createdAt}
-            </span>
+            <span style={{ marginRight: '5px' }}>{comment.author.name}</span>
+            <TimeAgo date={comment.createdAt} />
           </div>
           <div>{comment.body}</div>
           <div>
-            <Button className={classes.replayButton} onClick={this.openReplay}>
+            <Button className={classes.replyButton} onClick={this.openReply}>
               Responder
             </Button>
-            {showReplay && (
+            {showReplyInput && (
               <div>
                 <TextField
                   onChange={this.textChangeHandler}
@@ -84,19 +105,33 @@ class Comment extends React.Component {
                   fullWidth
                 />
                 <div style={{ textAlign: 'right', marginTop: '5px' }}>
-                  <Button onClick={this.closeReplay}>Cancel</Button>
+                  <Button onClick={this.closeReply}>Cancel</Button>
                   <Button
                     raised
                     color={'primary'}
-                    disabled={!replayMessage}
+                    disabled={!replyMessage}
                     style={{ fontWeight: 'bold', marginLeft: '3px' }}
-                    onClick={this.submitCommentHandler(comment._id)}
+                    onClick={() => this.closeReply() || onReply(replyMessage)}
                   >
-                    Replay
+                    Reply
                   </Button>
                 </div>
               </div>
             )}
+            <div>
+              {comment.repliesCount > 0 && (
+                <Button
+                  onClick={this.showRepliesHandler(comment._id)}
+                  className={classes.viewReplyButton}
+                >
+                  {comment.repliesCount > 1
+                    ? 'View all ' + comment.repliesCount + ' replies'
+                    : 'View reply'}
+                  {showReplies ? <ExpandLess /> : <ExpandMore />}
+                </Button>
+              )}
+            </div>
+            {this.renderReplies()}
           </div>
         </div>
       </div>

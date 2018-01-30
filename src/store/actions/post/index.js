@@ -2,17 +2,10 @@ import {
   getPosts,
   getPostById,
   createPost,
-  createComment,
   likePost as apiLikePost
 } from '../../../services/posts'
 
-import {
-  API,
-  FETCH_POSTS,
-  FETCH_POST,
-  ADD_POST_COMMENT,
-  LIKE_POST
-} from '../../constants'
+import { API, FETCH_POSTS, FETCH_POST, LIKE_POST } from '../../constants'
 import { postSchemaList, postSchema } from './schema'
 import { normalize } from 'normalizr'
 
@@ -44,20 +37,6 @@ const fetchPostSuccess = response => ({
   filter: response.category
 })
 
-export const addComment = (commentInfo, userInfo) => ({
-  type: API,
-  payload: {
-    api: createComment(commentInfo),
-    success: response => ({
-      type: ADD_POST_COMMENT,
-      comment: response,
-      postId: commentInfo.postId,
-      userInfo
-    }),
-    label: 'addComment'
-  }
-})
-
 export const likePost = ({ postId }) => ({
   type: API,
   payload: {
@@ -66,6 +45,7 @@ export const likePost = ({ postId }) => ({
       type: LIKE_POST,
       response,
       postId
-    })
+    }),
+    label: 'likePost'
   }
 })
