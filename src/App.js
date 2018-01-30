@@ -7,12 +7,24 @@ import HeaderContainer from './containers/HeaderContainer'
 import PostContainer from './containers/PostContainer'
 import PostCreateContainer from './containers/PostCreateContainer'
 import Logout from './containers/Logout'
+import { connect } from 'react-redux'
+import { signInWithToken } from './store/actions'
+import { getIsFetching } from './store/reducers/isFetching'
+import AuthContainer from './containers/AuthContainer'
 
 class App extends Component {
+  componentWillMount() {
+    const token = localStorage.getItem('token')
+    if (token && token !== 'null') {
+      this.props.signInWithToken(token)
+    }
+  }
+
   render() {
     return (
       <Fragment>
-        <HeaderContainer />
+        <HeaderContainer showUserItems={!this.props.isFetching} />
+        <Route path="/login" exact component={AuthContainer} />
         <Layout>
           <Switch>
             <Route path="/" exact component={PostsContainer} />
@@ -32,4 +44,8 @@ class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = state => ({
+  isFetching: getIsFetching('autoSignin')
+})
+
+export default connect(mapStateToProps, { signInWithToken })(App)

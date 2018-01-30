@@ -22,10 +22,12 @@ export const localStorageMiddleware = ({
   getState
 }) => next => action => {
   if (action.type === AUTH_SUCCESS) {
-    localStorage.setItem('token', action.token)
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${
       action.token
     }`
+    if (action.rememberLogin !== undefined && action.rememberLogin) {
+      localStorage.setItem('token', action.token)
+    }
   } else if (action.type === AUTH_LOGOUT) {
     localStorage.setItem('token', null)
     axiosInstance.defaults.headers.common['Authorization'] = null

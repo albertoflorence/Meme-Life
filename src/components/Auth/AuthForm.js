@@ -1,8 +1,9 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
-import { Button } from 'material-ui'
+import { Button, Checkbox } from 'material-ui'
 import TextInput from '../UI/TextInput'
 import { map } from '../../util/index'
+import FormControlLabel from 'material-ui/Form/FormControlLabel'
 
 const styles = theme => ({
   container: {
@@ -33,21 +34,38 @@ const Form = ({
   inputs,
   buttonLabel,
   onSubmit,
-  onTextChange
+  onTextChange,
+  onCheckBoxChange
 }) => (
   <div className={classes.container}>
     <form onSubmit={handleSubmit(inputs, onSubmit)}>
-      {map(inputs, ({ value, label, type }, fieldName) => (
-        <TextInput
-          key={fieldName}
-          label={label}
-          type={type}
-          value={value}
-          displayError={validate.byField(fieldName, value)}
-          onChange={onTextChange(fieldName)}
-          className={classes.textField}
-        />
-      ))}
+      {map(
+        inputs,
+        ({ value, label, type }, fieldName) =>
+          type === 'checkbox' ? (
+            <FormControlLabel
+              key={fieldName}
+              control={
+                <Checkbox
+                  checked={value}
+                  onChange={onCheckBoxChange(fieldName)}
+                  value={fieldName}
+                />
+              }
+              label={label}
+            />
+          ) : (
+            <TextInput
+              key={fieldName}
+              label={label}
+              type={type}
+              value={value}
+              displayError={validate.byField(fieldName, value)}
+              onChange={onTextChange(fieldName)}
+              className={classes.textField}
+            />
+          )
+      )}
       <div className={classes.actions}>
         <Button
           raised

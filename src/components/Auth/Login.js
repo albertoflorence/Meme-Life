@@ -18,6 +18,11 @@ class Login extends Component {
         value: '',
         label: 'Password',
         type: 'password'
+      },
+      rememberLogin: {
+        value: true,
+        label: 'Remember my login',
+        type: 'checkbox'
       }
     }
   }
@@ -34,6 +39,18 @@ class Login extends Component {
     })
   }
 
+  handleCheckBoxChange = inputName => event => {
+    this.setState({
+      inputs: {
+        ...this.state.inputs,
+        [inputName]: {
+          ...this.state.inputs[inputName],
+          value: event.target.checked
+        }
+      }
+    })
+  }
+
   render() {
     const { validate, onSubmit } = this.props
     return (
@@ -41,6 +58,7 @@ class Login extends Component {
         inputs={this.state.inputs}
         validate={validate}
         onTextChange={this.handleInputChange}
+        onCheckBoxChange={this.handleCheckBoxChange}
         onSubmit={onSubmit}
         buttonLabel="Sign In"
       />
