@@ -1,4 +1,4 @@
-import { AUTH_SUCCESS, AUTH_LOGOUT, API } from './constants'
+import { AUTH_SUCCESS, AUTH_LOGOUT, PAGINATION, API } from './constants'
 import { asyncError, asyncStart, asyncEnd } from './actions'
 import axiosInstance from '../services/api'
 
@@ -9,9 +9,13 @@ export const async = ({ dispatch, getState }) => next => action => {
 
   dispatch(asyncStart(label))
   return api.then(
-    data => {
+    ({ pages, response, ...data }) => {
+      dispatch({
+        type: PAGINATION,
+        pages
+      })
       dispatch(asyncEnd(label))
-      return dispatch(success(data))
+      return dispatch(success(response || data))
     },
     error => dispatch(asyncError(error, label))
   )

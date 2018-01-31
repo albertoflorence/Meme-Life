@@ -1,6 +1,7 @@
 import api from './api'
 
-export const getPosts = category => api.get('posts', { params: { category } })
+export const getPosts = (category, page) =>
+  api.get('posts', { params: { category, page } })
 
 export const getPostById = id => api.get(`posts/${id}`)
 

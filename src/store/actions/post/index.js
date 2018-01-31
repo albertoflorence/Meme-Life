@@ -9,10 +9,10 @@ import { API, FETCH_POSTS, FETCH_POST, LIKE_POST } from '../../constants'
 import { postSchemaList, postSchema } from './schema'
 import { normalize } from 'normalizr'
 
-export const fetchPosts = filter => ({
+export const fetchPosts = (filter, page) => ({
   type: API,
   payload: {
-    api: getPosts(filter),
+    api: getPosts(filter, page),
     success: response => ({
       type: FETCH_POSTS,
       ...normalize(response, postSchemaList),
