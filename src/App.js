@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import PostsContainer from './containers/PostsContainer'
 import Layout from './components/Layout'
 import HeaderContainer from './containers/HeaderContainer'
-import PostContainer from './containers/PostContainer'
+import PostDetailsContainer from './containers/PostDetailsContainer'
 import PostCreateContainer from './containers/PostCreateContainer'
 import Logout from './containers/Logout'
 import { connect } from 'react-redux'
@@ -35,7 +35,7 @@ class App extends Component {
               exact
               component={PostsContainer}
             />
-            <Route path="/posts/:id" exact component={PostContainer} />
+            <Route path="/posts/:id" exact component={PostDetailsContainer} />
           </Switch>
         </Layout>
         <div style={{ height: '300px', width: '100%' }}> </div>
