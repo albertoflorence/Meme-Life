@@ -1,14 +1,14 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/'
+  baseURL: 'https://memelifeserver.herokuapp.com/'
 })
 
 api.interceptors.response.use(
   response => response.data,
   error => {
     if (error.response.status === 401) {
-      window.location.href = 'login/'
+      window.location.href = '/login/'
     }
     return Promise.reject({
       ...error.response.data,

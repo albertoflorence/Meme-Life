@@ -20,5 +20,4 @@ const isFetching = (state = {}, action) => {
 
 export default isFetching
 
-export const getIsFetching = (state, label) =>
-  console.log(state) || (state && state[label])
+export const getIsFetching = (state, label) => state && state[label]

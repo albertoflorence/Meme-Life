@@ -118,7 +118,7 @@ class PostCreate extends Component {
 
   render() {
     const { inputs } = this.state
-    const { validate, isLoading } = this.props
+    const { validate } = this.props
     return (
       <PostCreateForm
         inputs={inputs}
@@ -135,7 +135,7 @@ class PostCreate extends Component {
 const rules = {
   validate: createValidation({
     title: [required],
-    description: [len(5, 60)],
+    description: [len(5, 150)],
     category: [required],
     content: [required]
   })

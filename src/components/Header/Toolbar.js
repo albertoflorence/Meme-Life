@@ -45,7 +45,7 @@ const Header = ({
     <div className={classes.root}>
       <AppBar className={classes.toolbar} position="static">
         <Toolbar>
-          <Grid container justify="space-between" alignItems="center">
+          <Grid container justify="space-around" alignItems="center">
             {showMenuItem && (
               <IconButton
                 onClick={onMenuClick}

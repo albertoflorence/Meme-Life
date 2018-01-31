@@ -11,7 +11,7 @@ const error = (state = {}, action) => {
     case ASYNC_ERROR:
       return {
         ...state,
-        [action.label]: action.error
+        [action.label]: action.error.message || action.error
       }
     default:
       return state

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { withStyles } from 'material-ui/styles'
 import { Avatar, Grid, CardHeader } from 'material-ui'
 import Link from 'react-router-dom/Link'
+import TimeAgo from '../UI/TimeAgo'
 
 const styles = theme => ({
   header: {
@@ -46,7 +47,7 @@ const PostHeader = ({ author, createdAt, category, classes }) => (
               {author.avatar ? null : author.name[0]}
             </Avatar>
           }
-          subheader={createdAt}
+          subheader={<TimeAgo date={createdAt} />}
         />
       </Grid>
       <Link className={classes.category} to={'/posts/category/' + category}>

@@ -17,7 +17,6 @@ class HeaderContainer extends Component {
   }
 
   get itemsRight() {
-    console.log(this.props)
     const { isAuthenticated } = this.props
     return isAuthenticated
       ? [

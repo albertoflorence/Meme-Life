@@ -4,7 +4,8 @@ import withStyles from 'material-ui/styles/withStyles'
 const style = theme => ({
   wrapper: {
     padding: '20px',
-    borderRadius: '10px'
+    borderRadius: '10px',
+    textAlign: 'center'
   },
   success: {
     backgroundColor: '#c8e6c9 ',

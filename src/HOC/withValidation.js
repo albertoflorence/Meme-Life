@@ -27,7 +27,7 @@ const withValidation = validations => Component => props => (
 export default withValidation
 
 export const email = value =>
-  /^[\w\-\.]+@[\w]+(\.\w+){1,2}$/.test(value)
+  /^[\w\-\.]+@[\w]+(\.\w+){1,2}$/.test(value) // eslint-disable-line no-useless-escape
     ? null
     : 'Please, provide a valid email address'
 

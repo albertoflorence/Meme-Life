@@ -43,12 +43,6 @@ export const toFormData = object =>
     new FormData()
   )
 
-export const transformDate = posts =>
-  posts.map(post => ({
-    ...post,
-    createdAt: formatTime(new Date() - new Date(post.createdAt))
-  }))
-
 export const queryParser = obj => {
   if (!obj) return ''
   let string = '?'
@@ -59,26 +53,4 @@ export const queryParser = obj => {
   }
   string += querys.join('&')
   return string
-}
-
-const formatTime = (time, i = 0) => {
-  const arr = [1000, 60, 60, 24, 7, 4, 12]
-  const names = [
-    'millisecond',
-    'second',
-    'minute',
-    'hour',
-    'day',
-    'week',
-    'mounth',
-    'year'
-  ]
-  if (isNaN(i)) i = names.indexOf(i)
-  const cur = arr[i]
-  if (time >= cur && cur !== undefined) {
-    return formatTime(time / cur, i + 1)
-  }
-  const rounded = Math.floor(time)
-  const plural = rounded > 1 ? 's' : ''
-  return rounded + ' ' + names[i] + plural + ' ago'
 }
