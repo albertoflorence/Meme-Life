@@ -1,43 +1,60 @@
 import React, { Component, Fragment } from 'react'
 import Post from '../components/Post/index'
 import { CircularProgress } from 'material-ui/Progress'
+import Pagination from '../components/UI/Pagination'
 import { connect } from 'react-redux'
 import { fetchPosts } from '../store/actions'
-import { getPosts } from '../store/reducers'
-import { getIsFetching } from '../store/reducers'
-import PaginationContainer from './PaginationContainer'
+import { getIsFetching, getPages, getPosts } from '../store/reducers'
 
 class PostsContainer extends Component {
+  state = {
+    currentPage: 1
+  }
+
   componentDidMount() {
     this.fetchData()
   }
 
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.filter !== prevProps.filter ||
-      this.props.page !== prevProps.page
-    ) {
+  componentDidUpdate(prevProps, prevState) {
+    const { currentPage } = this.state
+    if (prevState.currentPage !== currentPage) {
+      this.fetchData()
+      window.scrollTo(0, 0)
+    } else if (prevProps.filter !== this.props.filter) {
+      if (currentPage !== 1) {
+        return this.setState({ currentPage: 1 })
+      }
       this.fetchData()
     }
   }
 
+  handlerPageChange = page => {
+    this.setState({
+      currentPage: page
+    })
+  }
+
   fetchData() {
-    const { fetchPosts, filter, page } = this.props
-    fetchPosts(filter, page)
+    const { fetchPosts, filter } = this.props
+    fetchPosts(filter, this.state.currentPage)
   }
 
   render() {
-    const { posts, isFetching, page } = this.props
-    const render =
-      posts.length > 0
-        ? posts.map(post => <Post key={post._id} post={post} />)
-        : isFetching && <CircularProgress />
+    const { posts, isFetching, pages } = this.props
+    const { currentPage } = this.state
+
+    if (isFetching && posts.length < 1) return <CircularProgress />
 
     return (
       <Fragment>
-        {render}
+        {posts.map(post => <Post key={post._id} post={post} />)}
         <div style={{ textAlign: 'center' }}>
-          <PaginationContainer currentPage={page} />
+          <Pagination
+            pages={pages}
+            current={currentPage}
+            maxRange={8}
+            onChange={this.handlerPageChange}
+          />
         </div>
       </Fragment>
     )
@@ -46,14 +63,11 @@ class PostsContainer extends Component {
 
 const mapStateToProps = (state, { match, location }) => {
   const filter = match.params.category
-  const stringMatch = location.search.match(/page=\d+/)
-  let page = 1
-  if (stringMatch) page = parseInt(stringMatch[0].slice(5), 10) || 1
   return {
     posts: getPosts(state, filter),
     isFetching: getIsFetching(state, 'post'),
-    filter,
-    page
+    pages: getPages(state),
+    filter
   }
 }
 

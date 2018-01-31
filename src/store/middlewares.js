@@ -10,10 +10,12 @@ export const async = ({ dispatch, getState }) => next => action => {
   dispatch(asyncStart(label))
   return api.then(
     ({ pages, response, ...data }) => {
-      dispatch({
-        type: PAGINATION,
-        pages
-      })
+      if (Number.isInteger(pages)) {
+        dispatch({
+          type: PAGINATION,
+          pages
+        })
+      }
       dispatch(asyncEnd(label))
       return dispatch(success(response || data))
     },

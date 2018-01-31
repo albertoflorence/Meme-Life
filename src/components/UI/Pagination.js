@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import withStyles from 'material-ui/styles/withStyles'
-import Link from 'react-router-dom/Link'
-import Button from 'material-ui/Button'
 
 const style = theme => ({
   root: {
@@ -52,6 +50,7 @@ class Pagination extends Component {
 
   getIncrementor() {
     const { maxRange, pages, current } = this.props
+    if (pages <= maxRange) return 0
     const min = Math.floor(current - maxRange / 2)
     const max = Math.floor(current + maxRange / 2) - pages
     let incrementor = min > 0 ? min : 0
