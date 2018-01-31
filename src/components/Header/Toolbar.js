@@ -34,21 +34,33 @@ const HeaderItems = ({ items, align = 'center' }) => (
   </List>
 )
 
-const Header = ({ itemsCenter, itemsRight, classes }) => {
+const Header = ({
+  itemsCenter,
+  itemsRight,
+  onMenuClick,
+  classes,
+  showMenuItem
+}) => {
   return (
     <div className={classes.root}>
       <AppBar className={classes.toolbar} position="static">
         <Toolbar>
           <Grid container justify="space-between" alignItems="center">
-            <IconButton className={classes.menuButton} aria-label="Menu">
-              <Menu className={classes.white} />
-            </IconButton>
+            {showMenuItem && (
+              <IconButton
+                onClick={onMenuClick}
+                className={classes.menuButton}
+                aria-label="Menu"
+              >
+                <Menu className={classes.white} />
+              </IconButton>
+            )}
             <Typography type="title" color="inherit">
               <Link to="/" className={classes.brand}>
                 Meme
               </Link>
             </Typography>
-            <HeaderItems align="center" items={itemsCenter} />
+            {itemsCenter && <HeaderItems align="center" items={itemsCenter} />}
             <HeaderItems align="right" items={itemsRight} />
           </Grid>
         </Toolbar>

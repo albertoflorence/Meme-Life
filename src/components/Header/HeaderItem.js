@@ -12,16 +12,27 @@ const styles = theme => ({
   }
 })
 
-const Headeritem = ({ name, link = '', classes, component }) => {
+const Headeritem = ({
+  name,
+  link = '',
+  classes,
+  component,
+  display = 'inline'
+}) => {
   return (
     <ListItem
       button
-      style={{ display: 'inline', marginRight: '15px', padding: '0px' }}
+      style={{ display: display, marginRight: '15px', padding: '0px' }}
     >
       {link ? (
         <NavLink
           exact
-          activeStyle={{ color: 'white', fontWeight: 'bold' }}
+          activeStyle={{
+            color: 'white',
+            fontWeight: 'bold',
+            borderBottom: '1px solid white',
+            paddingBottom: '5px'
+          }}
           className={classes.navItem}
           to={link}
         >
